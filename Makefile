@@ -15,6 +15,7 @@ JS_FILES = \
 	src/models/legend.js \
 	src/models/line.js \
 	src/models/lineChart.js \
+	src/models/lineTimeSeriesChart.js \
 	src/models/linePlusBarChart.js \
 	src/models/lineWithFocusChart.js \
 	src/models/multiBar.js \
