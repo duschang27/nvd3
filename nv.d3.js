@@ -4295,7 +4295,7 @@ nv.models.lineTimeSeriesChart = function() {
   // change the X scale to display time
   lines.xScale(d3.time.scale());
 
-  var margin = {top: 25, right: 30, bottom: 25, left: 20}
+  var margin = {top: 25, right: 40, bottom: 25, left: 40}
     , color = nv.utils.defaultColor()
     , width = null
     , height = null
