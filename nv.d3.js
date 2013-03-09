@@ -1779,12 +1779,11 @@ nv.models.lineTimeSeriesChart = function() {
       //------------------------------------------------------------
       // Setup Axes
 
+      ticks = Math.floor(availableWidth / 100);
       xAxis
         .scale(x)
-        .ticks( availableWidth / 100 )
+        .ticks( ticks )
         .tickSize(-availableHeight, 0);
-
-      xAxis.axis.tickFormat(d3.time.format('%b %d %H:%M'));
 
       g.select('.nv-x.nv-axis')
           .attr('transform', 'translate(0,' + y.range()[0] + ')');
