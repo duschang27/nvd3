@@ -11,7 +11,7 @@ nv.models.lineTimeSeriesChart = function() {
     , legend = nv.models.legend()
     ;
   // change the X scale to display time
-  lines.xScale(d3.time.scale());
+  lines.xScale(d3.time.scale.utc());
 
   var margin = {top: 25, right: 40, bottom: 25, left: 40}
     , color = nv.utils.defaultColor()

@@ -6,7 +6,6 @@ JS_FILES = \
 	src/models/axis.js \
 	src/models/legend.js \
 	src/models/line.js \
-	src/models/lineChart.js \
 	src/models/lineTimeSeriesChart.js \
 	src/models/scatter.js \
 	src/outro.js
