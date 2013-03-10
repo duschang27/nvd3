@@ -1300,7 +1300,7 @@ nv.models.lineTimeSeriesChart = function() {
 
     var left = e.pos[0] + ( offsetElement.offsetLeft || 0 ),
         top = e.pos[1] + ( offsetElement.offsetTop || 0),
-        x = d3.time.format("%Y/%m/%d %H:%M")(new Date(lines.x()(e.point, e.pointIndex))),
+        x = d3.time.format.utc("%Y/%m/%d %H:%M")(new Date(lines.x()(e.point, e.pointIndex))),
         y = yAxis.tickFormat()(lines.y()(e.point, e.pointIndex)),
         content = tooltip(e.series.key, x, y, e, chart);
 
