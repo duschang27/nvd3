@@ -252,7 +252,7 @@ nv.models.lineTimeSeriesChart = function() {
   //------------------------------------------------------------
 
   lines.dispatch.on('elementMouseover.tooltip', function(e) {
-    e.pos = [e.pos[0], e.pos[1] + (4 * margin.top) ];
+    e.pos = [e.pos[0], e.pos[1] + 125 ];
     dispatch.tooltipShow(e);
   });
 
