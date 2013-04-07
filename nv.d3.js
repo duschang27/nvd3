@@ -2846,8 +2846,7 @@ nv.models.pieChart = function() {
     , color = nv.utils.defaultColor()
     , tooltips = true
     , tooltip = function(key, y, e, graph) {
-        return '<h3>' + key + '</h3>' +
-               '<p>' +  y + '</p>'
+        return '<span>' + key + ' - <b>' + y + '</b></span>'
       }
     , noData = "No Data Available."
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide')
@@ -3431,8 +3430,7 @@ nv.models.discreteBarChart = function() {
     , staggerLabels = false
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
-        return '<h3>' + x + '</h3>' +
-               '<p>' +  y + '</p>'
+        return '<span>' + x + ' - <b>' + y + '</b></span>'
       }
     , x
     , y

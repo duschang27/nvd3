@@ -17,8 +17,7 @@ nv.models.discreteBarChart = function() {
     , staggerLabels = false
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
-        return '<h3>' + x + '</h3>' +
-               '<p>' +  y + '</p>'
+        return '<span>' + x + ' - <b>' + y + '</b></span>'
       }
     , x
     , y
