@@ -8,6 +8,7 @@ JS_FILES = \
 	src/models/line.js \
 	src/models/lineTimeSeriesChart.js \
 	src/models/scatter.js \
+	src/models/parallelCoordinates.js \
 	src/models/pie.js \
 	src/models/pieChart.js \
 	src/models/discreteBar.js \

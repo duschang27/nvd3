@@ -137,9 +137,11 @@ nv.models.pie = function() {
             .each(function(d) { this._current = d; });
             //.attr('d', arc);
 
-        d3.transition(slices.select('path'))
-            .attr('d', arc)
-            .attrTween('d', arcTween);
+        var t = d3.transition(slices.select('path')).attr('d', arc)
+        if (t.attrTween === undefined) {
+          t = t.transition()
+        }  
+        t.attrTween('d', arcTween);
 
         if (showLabels) {
           // This does the normal label

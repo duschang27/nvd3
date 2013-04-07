@@ -18,9 +18,8 @@ nv.models.pieChart = function() {
         return '<h3>' + key + '</h3>' +
                '<p>' +  y + '</p>'
       }
-    , state = {}
     , noData = "No Data Available."
-    , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'stateChange', 'changeState')
+    , dispatch = d3.dispatch('tooltipShow', 'tooltipHide')
     ;
 
   //============================================================
@@ -56,13 +55,10 @@ nv.models.pieChart = function() {
       chart.update = function() { chart(selection); };
       chart.container = this;
 
-      //set state.disabled
-      state.disabled = data[0].map(function(d) { return !!d.disabled });
-
       //------------------------------------------------------------
       // Display No Data message if there's nothing to show.
 
-      if (!data[0] || !data[0].length) {
+      if (!data[0].values || !data[0].values.length) {
         var noDataText = container.selectAll('.nv-noData').data([noData]);
 
         noDataText.enter().append('text')
@@ -147,16 +143,13 @@ nv.models.pieChart = function() {
       legend.dispatch.on('legendClick', function(d,i, that) {
         d.disabled = !d.disabled;
 
-        if (!pie.values()(data[0]).filter(function(d) { return !d.disabled }).length) {
-          pie.values()(data[0]).map(function(d) {
+        if (!data[0].values.filter(function(d) { return !d.disabled }).length) {
+          data[0].values.map(function(d) {
             d.disabled = false;
             wrap.selectAll('.nv-series').classed('disabled', false);
             return d;
           });
         }
-
-        state.disabled = data[0].map(function(d) { return !!d.disabled });
-        dispatch.stateChange(state);
 
         selection.transition().call(chart)
       });
@@ -165,22 +158,7 @@ nv.models.pieChart = function() {
         dispatch.tooltipHide(e);
       });
 
-      // Update chart from a state object passed to event handler
-      dispatch.on('changeState', function(e) {
-
-        if (typeof e.disabled !== 'undefined') {
-          data[0].forEach(function(series,i) {
-            series.disabled = e.disabled[i];
-          });
-
-          state.disabled = e.disabled;
-        }
-
-        selection.call(chart);
-      });
-
       //============================================================
-
 
     });
 
@@ -262,12 +240,6 @@ nv.models.pieChart = function() {
   chart.tooltipContent = function(_) {
     if (!arguments.length) return tooltip;
     tooltip = _;
-    return chart;
-  };
-
-  chart.state = function(_) {
-    if (!arguments.length) return state;
-    state = _;
     return chart;
   };
 
