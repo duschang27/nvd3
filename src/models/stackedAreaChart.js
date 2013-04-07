@@ -79,6 +79,10 @@ nv.models.stackedAreaChart = function() {
       chart.update = function() { chart(selection) };
       chart.container = this;
 
+      //set state.disabled
+      state.disabled = data.map(function(d) { return !!d.disabled });
+
+
       //------------------------------------------------------------
       // Display No Data message if there's nothing to show.
 
@@ -247,6 +251,9 @@ nv.models.stackedAreaChart = function() {
             d.disabled = (i != e.seriesIndex);
             return d
           });
+
+        state.disabled = data.map(function(d) { return !!d.disabled });
+        dispatch.stateChange(state);
 
         //selection.transition().call(chart);
         chart(selection);

@@ -13,7 +13,17 @@ You can also check out the [examples page](http://nvd3.org/ghpages/examples.html
 
 ---
 
+# Current Improvement focus
+
+Upgrade to d3.v3 in progress!
+
+---
+
 If one of [the existing models](https://github.com/novus/nvd3/tree/master/src/models) doesn't meet your needs, fork the project, implement the model and an example using it, send us a pull request, for consideration for inclusion in the project.
+
+Please do not aggregate pull requests. Aggregated pull requests are actually more difficult to review!
+
+We are currently changing our branch structure so that master will be gauranteed stable. In addition, there is now a "development" branch. This branch reflects the latest changes to nvd3 and is not necessarily stable.
 
 ---
 
@@ -33,7 +43,7 @@ Without UglifyJS, you won't get the minified version when running make.
 
 **We ask that you DO NOT minify pull requests... 
 If you need to minify please build pull request in separate branch, and
-merge and minify in yout master.
+merge and minify in your master.
 
 ## (Officially) Supported Browsers
 

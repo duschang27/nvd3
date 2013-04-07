@@ -30,6 +30,7 @@ nv.models.multiBarChart = function() {
     , state = { stacked: false }
     , noData = "No Data Available."
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'stateChange', 'changeState')
+    , controlWidth = function() { return showControls ? 180 : 0 }
     ;
 
   multibar
@@ -79,6 +80,9 @@ nv.models.multiBarChart = function() {
 
       chart.update = function() { selection.transition().call(chart) };
       chart.container = this;
+
+      //set state.disabled
+      state.disabled = data.map(function(d) { return !!d.disabled });
 
 
       //------------------------------------------------------------
@@ -134,7 +138,7 @@ nv.models.multiBarChart = function() {
       // Legend
 
       if (showLegend) {
-        legend.width(availableWidth / 2);
+        legend.width(availableWidth - controlWidth());
 
         if (multibar.barColor())
           data.forEach(function(series,i) {
@@ -152,7 +156,7 @@ nv.models.multiBarChart = function() {
         }
 
         g.select('.nv-legendWrap')
-            .attr('transform', 'translate(' + (availableWidth / 2) + ',' + (-margin.top) +')');
+            .attr('transform', 'translate(' + controlWidth() + ',' + (-margin.top) +')');
       }
 
       //------------------------------------------------------------
@@ -167,7 +171,7 @@ nv.models.multiBarChart = function() {
           { key: 'Stacked', disabled: !multibar.stacked() }
         ];
 
-        controls.width(180).color(['#444', '#444', '#444']);
+        controls.width(controlWidth()).color(['#444', '#444', '#444']);
         g.select('.nv-controlsWrap')
             .datum(controlsData)
             .attr('transform', 'translate(0,' + (-margin.top) +')')
@@ -229,10 +233,10 @@ nv.models.multiBarChart = function() {
 
       if(rotateLabels)
         xTicks
-            .selectAll('text')
-            .attr('transform', function(d,i,j) { return 'rotate('+rotateLabels+' 0,0)' })
-            .attr('text-transform', rotateLabels > 0 ? 'start' : 'end');
-
+          .selectAll('text')
+          .attr('transform', 'rotate(' + rotateLabels + ' 0,0)')
+          .attr('text-anchor', rotateLabels > 0 ? 'start' : 'end');
+      
       g.select('.nv-x.nv-axis').selectAll('g.nv-axisMaxMin text')
           .style('opacity', 1);
 

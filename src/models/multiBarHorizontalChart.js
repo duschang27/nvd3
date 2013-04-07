@@ -29,6 +29,7 @@ nv.models.multiBarHorizontalChart = function() {
     , state = { stacked: stacked }
     , noData = 'No Data Available.'
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide', 'stateChange', 'changeState')
+    , controlWidth = function() { return showControls ? 180 : 0 }
     ;
 
   multibar
@@ -78,6 +79,9 @@ nv.models.multiBarHorizontalChart = function() {
 
       chart.update = function() { selection.transition().call(chart) };
       chart.container = this;
+
+      //set state.disabled
+      state.disabled = data.map(function(d) { return !!d.disabled });
 
 
       //------------------------------------------------------------
@@ -133,7 +137,7 @@ nv.models.multiBarHorizontalChart = function() {
       // Legend
 
       if (showLegend) {
-        legend.width(availableWidth / 2);
+        legend.width(availableWidth - controlWidth());
 
         if (multibar.barColor())
           data.forEach(function(series,i) {
@@ -151,7 +155,7 @@ nv.models.multiBarHorizontalChart = function() {
         }
 
         g.select('.nv-legendWrap')
-            .attr('transform', 'translate(' + (availableWidth / 2) + ',' + (-margin.top) +')');
+            .attr('transform', 'translate(' + controlWidth() + ',' + (-margin.top) +')');
       }
 
       //------------------------------------------------------------
@@ -166,7 +170,7 @@ nv.models.multiBarHorizontalChart = function() {
           { key: 'Stacked', disabled: !multibar.stacked() }
         ];
 
-        controls.width(180).color(['#444', '#444', '#444']);
+        controls.width(controlWidth()).color(['#444', '#444', '#444']);
         g.select('.nv-controlsWrap')
             .datum(controlsData)
             .attr('transform', 'translate(0,' + (-margin.top) +')')
