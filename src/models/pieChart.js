@@ -15,7 +15,9 @@ nv.models.pieChart = function() {
     , color = nv.utils.defaultColor()
     , tooltips = true
     , tooltip = function(key, y, e, graph) {
-        return '<span>' + key + ' - <b>' + y + '</b></span>'
+        p = parseFloat(y.replace(',','')) / graph.total;
+        p = Math.round(p * 100 * 10) / 10
+        return '<span>' + key + ' - <b>' + y + '</b></span><p>' + p + '%</p>'
       }
     , noData = "No Data Available."
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide')
@@ -74,6 +76,12 @@ nv.models.pieChart = function() {
       } else {
         container.selectAll('.nv-noData').remove();
       }
+      
+      total = 0
+      data[0].values.forEach(function(value) {
+        total += parseFloat(value.value)
+      });
+      chart.total = total 
 
       //------------------------------------------------------------
 
