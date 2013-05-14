@@ -10,7 +10,7 @@ nv.models.discreteBarChart = function() {
     , yAxis = nv.models.axis()
     ;
 
-  var margin = {top: 15, right: 10, bottom: 50, left: 60}
+  var margin = {top: 10, right: 40, bottom: 30, left: 40}
     , width = null
     , height = null
     , color = nv.utils.getColor()

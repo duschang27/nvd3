@@ -7,6 +7,7 @@ JS_FILES = \
 	src/models/legend.js \
 	src/models/line.js \
 	src/models/lineTimeSeriesChart.js \
+	src/models/lineWithFocusChart.js \
 	src/models/scatter.js \
 	src/models/parallelCoordinates.js \
 	src/models/pie.js \

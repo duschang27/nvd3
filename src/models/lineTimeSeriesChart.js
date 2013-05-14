@@ -20,7 +20,7 @@ nv.models.lineTimeSeriesChart = function() {
     , showLegend = true
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
-        return '<span>' + key + ' - <b>' + y + '</b></span>' + '<p>' + x + '</p>'
+        return '<span>' + key + ' - <b>' + y + '</b></span><p>' + x + '</p>'
                
       }
     , x
@@ -38,7 +38,6 @@ nv.models.lineTimeSeriesChart = function() {
   yAxis
     .orient('left')
     ;
-
   //============================================================
 
 

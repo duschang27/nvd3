@@ -117,7 +117,7 @@ nv.models.legend = function() {
             });
 
         //position legend as far right as possible within the total width
-        g.attr('transform', 'translate(' + (width - margin.right - legendWidth) + ',' + margin.top + ')');
+        g.attr('transform', 'translate(' + (width - margin.right - legendWidth) + ',0)');
 
         height = margin.top + margin.bottom + (Math.ceil(seriesWidths.length / seriesPerRow) * 20);
 
@@ -144,7 +144,7 @@ nv.models.legend = function() {
             });
 
         //position legend as far right as possible within the total width
-        g.attr('transform', 'translate(' + (width - margin.right - maxwidth) + ',' + margin.top + ')');
+        g.attr('transform', 'translate(' + (width - margin.right - maxwidth) + ',0)');
 
         height = margin.top + margin.bottom + ypos + 15;
 
