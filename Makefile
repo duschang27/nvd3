@@ -14,6 +14,7 @@ JS_FILES = \
 	src/models/pieChart.js \
 	src/models/discreteBar.js \
 	src/models/discreteBarChart.js \
+	src/models/funnelBarChart.js \
 	src/outro.js
 
 JS_COMPILER = \

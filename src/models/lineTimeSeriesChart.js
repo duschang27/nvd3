@@ -20,8 +20,8 @@ nv.models.lineTimeSeriesChart = function() {
     , showLegend = true
     , tooltips = true
     , tooltip = function(key, x, y, e, graph) {
-        return '<span>' + key + ' - <b>' + y + '</b></span><p>' + x + '</p>'
-               
+        return '<span>' + key + ' - <b>' + d3.format(',.2f')(e.point[1]) + '</b></span><p>' + x + '</p>'
+
       }
     , x
     , y
@@ -208,7 +208,7 @@ nv.models.lineTimeSeriesChart = function() {
       // Event Handling/Dispatching (in chart's scope)
       //------------------------------------------------------------
 
-      legend.dispatch.on('legendClick', function(d,i) { 
+      legend.dispatch.on('legendClick', function(d,i) {
         d.disabled = !d.disabled;
 
         if (!data.filter(function(d) { return !d.disabled }).length) {
