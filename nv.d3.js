@@ -4161,6 +4161,11 @@ nv.models.discreteBarChart = function() {
 
       var xTicks = g.select('.nv-x.nv-axis').selectAll('g');
 
+      xTicks
+        .selectAll('text')
+        .attr('transform', 'translate(0,10)')
+        .style('font-size', '12px');
+
       if (staggerLabels) {
         xTicks
             .selectAll('text')
@@ -4536,6 +4541,11 @@ nv.models.funnelBarChart = function() {
 
 
       var xTicks = g.select('.nv-x.nv-axis').selectAll('g');
+
+      xTicks
+        .selectAll('text')
+        .attr('transform', 'translate(0,10)')
+        .style('font-size', '12px');
 
       if (staggerLabels) {
         xTicks
