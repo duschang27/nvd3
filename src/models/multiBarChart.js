@@ -82,6 +82,9 @@ nv.models.multiBarChart = function() {
       chart.update = function() { selection.transition().call(chart) };
       chart.container = this;
 
+      if (state.stacked != multibar.stacked()) {
+        multibar.stacked(state.stacked)
+      }
       //set state.disabled
       state.disabled = data.map(function(d) { return !!d.disabled });
 

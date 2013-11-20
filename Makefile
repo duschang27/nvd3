@@ -12,6 +12,8 @@ JS_FILES = \
 	src/models/parallelCoordinates.js \
 	src/models/pie.js \
 	src/models/pieChart.js \
+	src/models/multiBar.js \
+	src/models/multiBarChart.js \
 	src/models/discreteBar.js \
 	src/models/discreteBarChart.js \
 	src/models/funnelBarChart.js \

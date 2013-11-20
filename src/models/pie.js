@@ -15,11 +15,11 @@ nv.models.pie = function() {
     , color = nv.utils.defaultColor()
     , valueFormat = d3.format(',.2f')
     , showLabels = true
-    , pieLabelsOutside = true
+    , pieLabelsOutside = false
     , donutLabelsOutside = false
-    , labelThreshold = .02 //if slice percentage is under this, don't show label
+    , labelThreshold = .025 //if slice percentage is under this, don't show label
     , donut = false
-    , labelSunbeamLayout = false
+    , labelSunbeamLayout = true
     , startAngle = false
     , endAngle = false
     , donutRatio = 0.5
@@ -140,13 +140,13 @@ nv.models.pie = function() {
         var t = d3.transition(slices.select('path')).attr('d', arc)
         if (t.attrTween === undefined) {
           t = t.transition()
-        }  
+        }
         t.attrTween('d', arcTween);
 
         if (showLabels) {
           // This does the normal label
           var labelsArc = d3.svg.arc().innerRadius(0);
-          
+
           if (pieLabelsOutside){ labelsArc = arc; }
 
           if (donutLabelsOutside) { labelsArc = d3.svg.arc().outerRadius(arc.outerRadius()); }
@@ -157,9 +157,10 @@ nv.models.pie = function() {
 
               group
                 .attr('transform', function(d) {
-                     if (labelSunbeamLayout) {
-                       d.outerRadius = arcRadius + 10; // Set Outer Coordinate
-                       d.innerRadius = arcRadius + 15; // Set Inner Coordinate
+                     var sliceDegree = (d.endAngle - d.startAngle) / Math.PI * 180;
+                     if (labelSunbeamLayout && sliceDegree <= 180) {
+                       d.outerRadius = arcRadius * 0.75 + 10; // Set Outer Coordinate
+                       d.innerRadius = arcRadius * 0.75 + 15; // Set Inner Coordinate
                        var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
                        if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                        	 rotateAngle -= 90;
@@ -168,8 +169,8 @@ nv.models.pie = function() {
                        }
                        return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
                      } else {
-                       d.outerRadius = radius + 10; // Set Outer Coordinate
-                       d.innerRadius = radius + 15; // Set Inner Coordinate
+                       d.outerRadius = radius * 0.75 + 10; // Set Outer Coordinate
+                       d.innerRadius = radius * 0.75 + 15; // Set Inner Coordinate
                        return 'translate(' + labelsArc.centroid(d) + ')'
                      }
                 });
@@ -182,16 +183,16 @@ nv.models.pie = function() {
 
               group.append('text')
                   .style('text-anchor', labelSunbeamLayout ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
-                  .style('fill', '#000')
-
+                  .style('fill', '#000');
 
           });
 
           slices.select(".nv-label").transition()
             .attr('transform', function(d) {
-            	if (labelSunbeamLayout) {
-                  d.outerRadius = arcRadius + 10; // Set Outer Coordinate
-                  d.innerRadius = arcRadius + 15; // Set Inner Coordinate
+              var sliceDegree = (d.endAngle - d.startAngle) / Math.PI * 180;
+            	if (labelSunbeamLayout && sliceDegree <= 180) {
+                  d.outerRadius = arcRadius * 0.75 + 10; // Set Outer Coordinate
+                  d.innerRadius = arcRadius * 0.75 + 15; // Set Inner Coordinate
                   var rotateAngle = (d.startAngle + d.endAngle) / 2 * (180 / Math.PI);
                   if ((d.startAngle+d.endAngle)/2 < Math.PI) {
                     rotateAngle -= 90;
@@ -200,18 +201,19 @@ nv.models.pie = function() {
                   }
                   return 'translate(' + labelsArc.centroid(d) + ') rotate(' + rotateAngle + ')';
                 } else {
-                  d.outerRadius = radius + 10; // Set Outer Coordinate
-                  d.innerRadius = radius + 15; // Set Inner Coordinate
+                  d.outerRadius = radius * 0.75 + 10; // Set Outer Coordinate
+                  d.innerRadius = radius * 0.75 + 15; // Set Inner Coordinate
                   return 'translate(' + labelsArc.centroid(d) + ')'
                 }
             });
 
           slices.each(function(d, i) {
             var slice = d3.select(this);
-
+            var sliceDegree = (d.endAngle - d.startAngle) / Math.PI * 180;
             slice
               .select(".nv-label text")
-                .style('text-anchor', labelSunbeamLayout ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
+                .style('text-anchor', (labelSunbeamLayout && sliceDegree <= 180) ? ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end') : 'middle') //center the text on it's origin or begin/end if orthogonal aligned
+                .attr('transform', "translate(0,4)")
                 .text(function(d, i) {
                   var percent = (d.endAngle - d.startAngle) / (2 * Math.PI);
                   return (d.value && percent > labelThreshold) ? getX(d.data) : '';
@@ -301,7 +303,7 @@ nv.models.pie = function() {
     getY = d3.functor(_);
     return chart;
   };
-  
+
   chart.description = function(_) {
     if (!arguments.length) return getDescription;
     getDescription = _;
@@ -313,7 +315,7 @@ nv.models.pie = function() {
     showLabels = _;
     return chart;
   };
-  
+
   chart.labelSunbeamLayout = function(_) {
     if (!arguments.length) return labelSunbeamLayout;
     labelSunbeamLayout = _;
@@ -325,7 +327,7 @@ nv.models.pie = function() {
     donutLabelsOutside = _;
     return chart;
   };
-  
+
   chart.pieLabelsOutside = function(_) {
     if (!arguments.length) return pieLabelsOutside;
     pieLabelsOutside = _;
@@ -337,7 +339,7 @@ nv.models.pie = function() {
     donut = _;
     return chart;
   };
-  
+
   chart.donutRatio = function(_) {
     if (!arguments.length) return donutRatio;
     donutRatio = _;

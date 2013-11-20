@@ -17,7 +17,7 @@ nv.models.pieChart = function() {
     , tooltip = function(key, y, e, graph) {
         p = parseFloat(y.replace(/\,/g,'')) / graph.total;
         p = Math.round(p * 100 * 10) / 10
-        return '<span>' + key + ' - <b>' + y + '</b></span><p>' + p + '%</p>'
+        return '<span>' + e.point.label + ' - <b>' + y + '</b></span><p>' + p + '%</p>'
       }
     , noData = "No Data Available."
     , dispatch = d3.dispatch('tooltipShow', 'tooltipHide')
@@ -59,7 +59,7 @@ nv.models.pieChart = function() {
       //------------------------------------------------------------
       // Display No Data message if there's nothing to show.
 
-      if (!data[0].values || !data[0].values.length) {
+      if (!data || !data.length || !data[0].values || !data[0].values.length) {
         var noDataText = container.selectAll('.nv-noData').data([noData]);
 
         noDataText.enter().append('text')
@@ -126,14 +126,12 @@ nv.models.pieChart = function() {
 
       wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-
       //------------------------------------------------------------
       // Main Chart Component(s)
 
       pie
         .width(availableWidth)
         .height(availableHeight);
-
 
       var pieWrap = g.select('.nv-pieWrap')
           .datum(data);
